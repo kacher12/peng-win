@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://boqbar4lfvu82"]
+
+[ext_resource type="Script" uid="uid://bbsh160xotijw" path="res://TempBar.gd" id="2_mbwtm"]
+
+[node name="CanvasLayer" type="CanvasLayer" unique_id=158583930]
+
+[node name="VSlider" type="VSlider" parent="." unique_id=889477637]
+offset_left = 1087.0
+offset_top = 77.0
+offset_right = 1103.0
+offset_bottom = 359.0
+
+[node name="ProgressBar" type="ProgressBar" parent="." unique_id=1506780048]
+offset_left = 353.0
+offset_top = 8.0
+offset_right = 395.0
+offset_bottom = 390.0
+value = 100.0
+fill_mode = 3
+script = ExtResource("2_mbwtm")

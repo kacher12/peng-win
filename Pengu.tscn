@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://c82rxv4gqb1nn"]
+
+[ext_resource type="Script" uid="uid://doy4yyearr7s1" path="res://Pengu.gd" id="1_ryw4k"]
+[ext_resource type="Texture2D" uid="uid://kwain7n1ju0a" path="res://icons misc/icon.svg" id="2_7sdkj"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_k3g0f"]
+size = Vector2(133, 130)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ryw4k"]
+size = Vector2(133, 126)
+
+[node name="Pengu" type="CharacterBody2D" unique_id=551118758 groups=["player"]]
+scale = Vector2(0.8, 0.8)
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("1_ryw4k")
+speed = 600
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1127549873]
+texture = ExtResource("2_7sdkj")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1754494248]
+position = Vector2(-0.5, -1)
+shape = SubResource("RectangleShape2D_k3g0f")
+
+[node name="PickupRadius" type="Area2D" parent="." unique_id=1854572090]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PickupRadius" unique_id=1243692462]
+position = Vector2(-0.5, -3)
+shape = SubResource("RectangleShape2D_ryw4k")
