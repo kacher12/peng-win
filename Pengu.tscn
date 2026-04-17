@@ -10,11 +10,10 @@ size = Vector2(133, 130)
 size = Vector2(133, 126)
 
 [node name="Pengu" type="CharacterBody2D" unique_id=551118758 groups=["player"]]
-scale = Vector2(0.8, 0.8)
+scale = Vector2(0.7, 0.7)
 collision_layer = 3
 collision_mask = 3
 script = ExtResource("1_ryw4k")
-speed = 600
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1127549873]
 texture = ExtResource("2_7sdkj")

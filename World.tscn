@@ -1,14 +1,33 @@
-[gd_scene format=3 uid="uid://cxtivdgj6gf60"]
+[gd_scene format=4 uid="uid://cxtivdgj6gf60"]
 
 [ext_resource type="PackedScene" uid="uid://c82rxv4gqb1nn" path="res://Pengu.tscn" id="1_c6gwx"]
 [ext_resource type="PackedScene" uid="uid://boqbar4lfvu82" path="res://Bars.tscn" id="2_2dftf"]
 [ext_resource type="PackedScene" uid="uid://dtgvcmnqa86bk" path="res://pickups/HeatBall.tscn" id="3_bcbcq"]
 
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_bcbcq"]
+load_path = "res://.godot/imported/icon.svg-a96871d0d6983a80fe3fad9e47f1007d.ctex"
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_js7pq"]
+resource_name = "wall"
+texture = SubResource("CompressedTexture2D_bcbcq")
+margins = Vector2i(2, 0)
+texture_region_size = Vector2i(124, 124)
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-62, -62, 62, -62, 62, 62, -62, 62)
+
+[sub_resource type="TileSet" id="TileSet_p1v5b"]
+tile_size = Vector2i(124, 124)
+physics_layer_0/collision_layer = 3
+physics_layer_0/collision_mask = 3
+terrain_set_0/mode = 0
+sources/2 = SubResource("TileSetAtlasSource_js7pq")
+
 [node name="Node2D" type="Node2D" unique_id=1273529827]
 position = Vector2(436, 296)
 
 [node name="Pengu" parent="." unique_id=551118758 instance=ExtResource("1_c6gwx")]
-position = Vector2(144, -62)
+position = Vector2(148, -191.99998)
+safe_margin = 0.8
 
 [node name="CanvasLayer" parent="." unique_id=158583930 instance=ExtResource("2_2dftf")]
 
@@ -23,3 +42,15 @@ position = Vector2(-326, 95)
 
 [node name="HeatBall" parent="HeatBall3" unique_id=340607756 instance=ExtResource("3_bcbcq")]
 position = Vector2(-9, -88)
+
+[node name="TileMap" type="TileMapLayer" parent="." unique_id=1826270258]
+tile_map_data = PackedByteArray("AAAAAAAAAgAAAAAAAAABAAAAAgAAAAAAAAACAAAAAgAAAAAAAAD+/wAAAgAAAAAAAAD+//7/AgAAAAAAAAAAAP3/AgAAAAAAAAACAP3/AgAAAAAAAAA=")
+tile_set = SubResource("TileSet_p1v5b")
+occlusion_enabled = false
+collision_visibility_mode = 1
+
+[node name="HeatBall4" parent="." unique_id=855672753 instance=ExtResource("3_bcbcq")]
+position = Vector2(-340, -144)
+
+[node name="HeatBall" parent="HeatBall4" unique_id=733846179 instance=ExtResource("3_bcbcq")]
+position = Vector2(0, -56)
