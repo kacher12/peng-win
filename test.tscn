@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://ct8dssk56r35i"]
+
+[node name="Node2D" type="Label" unique_id=2073233306]
+custom_minimum_size = Vector2(2, 0)
+offset_right = 842.0
+offset_bottom = 329.0
+scale = Vector2(9, 9)
+text = "ZACZELO SIE!!!!"
