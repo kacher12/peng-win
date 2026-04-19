@@ -9,11 +9,18 @@ size = Vector2(133, 130)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ryw4k"]
 size = Vector2(133, 126)
 
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_ryw4k"]
+
 [node name="Pengu" type="CharacterBody2D" unique_id=551118758 groups=["player"]]
 scale = Vector2(0.7, 0.7)
 collision_layer = 3
 collision_mask = 3
 script = ExtResource("1_ryw4k")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1841463969]
+scale = Vector2(1.4285713, 1.4285713)
+position_smoothing_enabled = true
+position_smoothing_speed = 4.0
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1127549873]
 texture = ExtResource("2_7sdkj")
@@ -27,3 +34,6 @@ shape = SubResource("RectangleShape2D_k3g0f")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PickupRadius" unique_id=1243692462]
 position = Vector2(-0.5, -3)
 shape = SubResource("RectangleShape2D_ryw4k")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=100846827]
+mesh = SubResource("CapsuleMesh_ryw4k")

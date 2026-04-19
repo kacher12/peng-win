@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-@export var speed = 400
+@export var speed = 600
 
 func get_input():
 	var input_direction = Input.get_vector("left", "right", "up", "down")
@@ -12,7 +12,7 @@ func _physics_process(delta):
 	
 	if Input.is_action_just_pressed("dash"):
 		
-		velocity = Input.get_vector("left", "right", "up", "down") * 4000
+		velocity = Input.get_vector("left", "right", "up", "down") * 6000
 	
 
 	move_and_slide()
