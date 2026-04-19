@@ -12,7 +12,7 @@ func _physics_process(delta):
 	
 	if Input.is_action_just_pressed("dash"):
 		
-		velocity = Input.get_vector("left", "right", "up", "down") * 6700
+		velocity = Input.get_vector("left", "right", "up", "down") * 6000
 	
 
 	move_and_slide()
