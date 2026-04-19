@@ -31,7 +31,7 @@ func _physics_process(delta):
 	
 	# Logika trwania i kończenia dasha
 	if is_dashing:
-		dash_timer += delta # Zwiększamy licznik o czas, który upłynął
+		dash_timer += delta # Zwiększamy licznik ddo czas, który upłynął
 		
 
 		#Maks dash
