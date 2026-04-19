@@ -9,11 +9,18 @@ size = Vector2(133, 130)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ryw4k"]
 size = Vector2(133, 126)
 
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_ryw4k"]
+
 [node name="Pengu" type="CharacterBody2D" unique_id=551118758 groups=["player"]]
 scale = Vector2(0.7, 0.7)
 collision_layer = 3
 collision_mask = 3
 script = ExtResource("1_ryw4k")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1841463969]
+scale = Vector2(1.4285713, 1.4285713)
+position_smoothing_enabled = true
+position_smoothing_speed = 4.0
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1127549873]
 texture = ExtResource("2_7sdkj")
@@ -27,3 +34,28 @@ shape = SubResource("RectangleShape2D_k3g0f")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PickupRadius" unique_id=1243692462]
 position = Vector2(-0.5, -3)
 shape = SubResource("RectangleShape2D_ryw4k")
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="." unique_id=1801835081]
+offset_left = -128.0
+offset_top = -128.0
+offset_right = 128.0
+offset_bottom = 128.0
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer" unique_id=1537925775]
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(256, 256)
+render_target_update_mode = 4
+
+[node name="Node3D" type="Node3D" parent="SubViewportContainer/SubViewport" unique_id=637340324]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/Node3D" unique_id=903568458]
+mesh = SubResource("CapsuleMesh_ryw4k")
+
+[node name="Camera3D" type="Camera3D" parent="SubViewportContainer/SubViewport" unique_id=1654892143]
+transform = Transform3D(1, 0, 0, 0, 0.7071068, 0.70710677, 0, -0.70710677, 0.7071068, 0, 1.7092669, 1.5253737)
+projection = 1
+size = 2.754
+
+[node name="OmniLight3D" type="OmniLight3D" parent="SubViewportContainer/SubViewport" unique_id=1148776262]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5777886, 3.3201067)
