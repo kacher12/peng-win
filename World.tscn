@@ -32,6 +32,8 @@ position = Vector2(436, 296)
 position = Vector2(148, -191.99998)
 floor_block_on_wall = false
 safe_margin = 0.8
+dash_speed = 1000
+dash_steering = 10.0
 
 [node name="CanvasLayer" parent="." unique_id=158583930 instance=ExtResource("2_2dftf")]
 
