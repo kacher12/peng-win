@@ -3,22 +3,84 @@
 [ext_resource type="PackedScene" uid="uid://c82rxv4gqb1nn" path="res://Pengu.tscn" id="1_c6gwx"]
 [ext_resource type="PackedScene" uid="uid://boqbar4lfvu82" path="res://Bars.tscn" id="2_2dftf"]
 [ext_resource type="PackedScene" uid="uid://dtgvcmnqa86bk" path="res://pickups/HeatBall.tscn" id="3_bcbcq"]
+[ext_resource type="Texture2D" uid="uid://2xf802x3dgqb" path="res://tilesetPengWin.png" id="4_js7pq"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_bcbcq"]
 
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_bcbcq"]
-load_path = "res://.godot/imported/icon.svg-a96871d0d6983a80fe3fad9e47f1007d.ctex"
-
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_js7pq"]
-resource_name = "wall"
-texture = SubResource("CompressedTexture2D_bcbcq")
-margins = Vector2i(2, 0)
-texture_region_size = Vector2i(124, 124)
+resource_name = "ice"
+texture = ExtResource("4_js7pq")
+margins = Vector2i(40, 15)
+texture_region_size = Vector2i(64, 64)
 0:0/0 = 0
 0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-62, -62, 62, -62, 62, 62, -62, 62)
+0:3/0 = 0
+1:3/0 = 0
+2:3/0 = 0
+0:4/0 = 0
+1:4/0 = 0
+2:4/0 = 0
+3:4/0 = 0
+4:4/0 = 0
+0:5/0 = 0
+1:5/0 = 0
+2:5/0 = 0
+3:5/0 = 0
+4:5/0 = 0
+4:8/0 = 0
+4:7/0 = 0
+5:7/0 = 0
+5:8/0 = 0
+4:9/0 = 0
+4:10/0 = 0
+5:10/0 = 0
+5:9/0 = 0
+4:11/0 = 0
+1:7/0 = 0
+2:7/0 = 0
+3:7/0 = 0
+1:8/0 = 0
+2:8/0 = 0
+3:8/0 = 0
+3:9/0 = 0
+2:9/0 = 0
+1:9/0 = 0
+1:10/0 = 0
+3:10/0 = 0
+3:11/0 = 0
+2:11/0 = 0
+2:10/0 = 0
+1:11/0 = 0
+0:11/0 = 0
+0:10/0 = 0
+0:9/0 = 0
+0:8/0 = 0
+0:7/0 = 0
+5:11/0 = 0
+6:9/0 = 0
+8:9/0 = 0
+7:9/0 = 0
+7:10/0 = 0
+8:10/0 = 0
+6:10/0 = 0
+7:11/0 = 0
+8:11/0 = 0
+11:5/0 = 0
+11:6/0 = 0
+10:6/0 = 0
+9:6/0 = 0
+8:6/0 = 0
+7:6/0 = 0
+6:6/0 = 0
+5:6/0 = 0
+4:6/0 = 0
+3:6/0 = 0
+10:5/0 = 0
+6:5/0 = 0
+5:5/0 = 0
 
 [sub_resource type="TileSet" id="TileSet_p1v5b"]
-tile_size = Vector2i(124, 124)
+tile_size = Vector2i(64, 64)
 physics_layer_0/collision_layer = 3
 physics_layer_0/collision_mask = 3
 physics_layer_0/physics_material = SubResource("PhysicsMaterial_bcbcq")
@@ -27,14 +89,6 @@ sources/2 = SubResource("TileSetAtlasSource_js7pq")
 
 [node name="Node2D" type="Node2D" unique_id=1273529827]
 position = Vector2(436, 296)
-
-[node name="Pengu" parent="." unique_id=551118758 instance=ExtResource("1_c6gwx")]
-position = Vector2(148, -191.99998)
-floor_block_on_wall = false
-safe_margin = 0.8
-dash_speed = 900
-dash_steering = 8.0
-min_dash_duration = 0.1
 
 [node name="CanvasLayer" parent="." unique_id=158583930 instance=ExtResource("2_2dftf")]
 
@@ -51,7 +105,8 @@ position = Vector2(-326, 95)
 position = Vector2(-9, -88)
 
 [node name="TileMap" type="TileMapLayer" parent="." unique_id=1826270258]
-tile_map_data = PackedByteArray("AAAAAAAAAgAAAAAAAAABAAAAAgAAAAAAAAACAAAAAgAAAAAAAAD+/wAAAgAAAAAAAAD+//7/AgAAAAAAAAAAAP3/AgAAAAAAAAACAP3/AgAAAAAAAAA=")
+position = Vector2(0, -1)
+tile_map_data = PackedByteArray("AAAAAPv/AgABAAcAAAAAAPz/AgABAAgAAAAAAP//AgABAAsAAAABAPv/AgACAAcAAAABAPz/AgACAAgAAAABAP3/AgACAAkAAAACAPv/AgADAAcAAAACAPz/AgADAAgAAAACAP3/AgADAAkAAAACAP7/AgADAAoAAAADAPv/AgAEAAcAAAADAPz/AgAEAAgAAAADAP3/AgAEAAkAAAADAP7/AgAEAAoAAAD///v/AgAAAAcAAAD///z/AgAAAAgAAAD///7/AgAAAAoAAAD/////AgAAAAsAAAD8//v/AgABAAkAAAD8//z/AgABAAkAAAD8//3/AgABAAkAAAD8//7/AgABAAkAAAD8////AgABAAkAAAD8/wAAAgABAAkAAAD8/wEAAgABAAkAAAD9//v/AgABAAkAAAD9//z/AgABAAkAAAD9//3/AgABAAkAAAD9//7/AgABAAkAAAD9////AgABAAkAAAD9/wAAAgABAAkAAAD9/wEAAgABAAkAAAD8/wIAAgABAAkAAAD+//v/AgABAAkAAAD+//z/AgABAAkAAAD+//3/AgABAAkAAAD+//7/AgABAAkAAAD+////AgABAAkAAAD+/wAAAgABAAkAAAAEAP7/AgAFAAcAAAAEAP//AgAFAAgAAAAEAAIAAgAFAAsAAAAFAP7/AgAEAAcAAAAFAP//AgAEAAcAAAAFAAAAAgAEAAcAAAAFAAIAAgAEAAcAAAAFAAMAAgAEAAcAAAAFAAQAAgAEAAcAAAAGAP7/AgAEAAcAAAAGAP//AgAEAAcAAAAGAAAAAgAEAAcAAAAGAAEAAgAEAAcAAAAGAAIAAgAEAAcAAAAGAAMAAgAEAAcAAAAGAAQAAgAEAAcAAAAHAP7/AgAEAAcAAAAHAP//AgAEAAcAAAAHAAAAAgAEAAcAAAAHAAEAAgAEAAcAAAAHAAIAAgAEAAcAAAAHAAMAAgAEAAcAAAAHAAQAAgAEAAcAAAAIAP7/AgAEAAcAAAAIAP//AgAEAAcAAAAIAAAAAgAEAAcAAAAIAAEAAgAEAAcAAAAIAAIAAgAEAAcAAAAIAAMAAgAEAAcAAAAIAAQAAgAEAAcAAAAFAAEAAgAEAAcAAAAGAPz/AgABAAkAAAAFAPz/AgAAAAkAAAAHAPz/AgACAAkAAAAIAPz/AgADAAkAAAAJAPz/AgAEAAkAAAAFAPv/AgAAAAgAAAAFAP3/AgAAAAoAAAAGAPv/AgABAAgAAAAGAP3/AgABAAoAAAAHAPv/AgACAAgAAAAHAP3/AgACAAoAAAAIAPv/AgADAAgAAAAIAP3/AgADAAoAAAAJAPv/AgAEAAgAAAAJAP3/AgAEAAoAAAD2//v/AgAAAAcAAAD2//z/AgAAAAgAAAD2//3/AgAAAAkAAAD2//7/AgAAAAoAAAD2////AgAAAAsAAAD3//v/AgABAAcAAAD3//z/AgABAAgAAAD3//3/AgABAAkAAAD3//7/AgABAAoAAAD3////AgABAAsAAAD4//v/AgACAAcAAAD4//z/AgACAAgAAAD4//3/AgACAAkAAAD4//7/AgACAAoAAAD4////AgACAAsAAAD5//v/AgADAAcAAAD5//z/AgADAAgAAAD5//3/AgADAAkAAAD5//7/AgADAAoAAAD5////AgADAAsAAAD6//v/AgAEAAcAAAD6//z/AgAEAAgAAAD6//3/AgAEAAkAAAD6//7/AgAEAAoAAAD6////AgAEAAsAAAD7//v/AgAFAAcAAAD7//z/AgAFAAgAAAD7//3/AgAFAAkAAAD7//7/AgAFAAoAAAD7////AgAFAAsAAAABAP7/AgACAAoAAAAAAP7/AgABAAoAAAAAAP3/AgABAAkAAAD///3/AgAAAAkAAAA=")
 tile_set = SubResource("TileSet_p1v5b")
 occlusion_enabled = false
 collision_visibility_mode = 1
@@ -59,5 +114,13 @@ collision_visibility_mode = 1
 [node name="HeatBall4" parent="." unique_id=855672753 instance=ExtResource("3_bcbcq")]
 position = Vector2(-340, -144)
 
-[node name="HeatBall" parent="HeatBall4" unique_id=733846179 instance=ExtResource("3_bcbcq")]
-position = Vector2(0, -56)
+[node name="HeatBall5" parent="." unique_id=733846179 instance=ExtResource("3_bcbcq")]
+position = Vector2(-340, -200)
+
+[node name="Pengu" parent="." unique_id=551118758 instance=ExtResource("1_c6gwx")]
+position = Vector2(164, -440)
+floor_block_on_wall = false
+safe_margin = 0.8
+dash_speed = 900
+dash_steering = 8.0
+min_dash_duration = 0.1

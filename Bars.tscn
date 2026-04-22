@@ -23,5 +23,5 @@ value = 100.0
 allow_greater = true
 fill_mode = 3
 script = ExtResource("2_mbwtm")
-float_amplitude = 10.0
+lerp_speed = 0.3
 temp_gradient = SubResource("Gradient_e8rgo")

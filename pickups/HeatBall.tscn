@@ -1,21 +1,63 @@
 [gd_scene format=3 uid="uid://dtgvcmnqa86bk"]
 
-[ext_resource type="Texture2D" uid="uid://kwain7n1ju0a" path="res://icons misc/icon.svg" id="1_f2ivb"]
 [ext_resource type="Script" uid="uid://d3rf83gisdabi" path="res://pickups/HeatBall.gd" id="1_qnd70"]
 
+[sub_resource type="SpriteFrames" id="SpriteFrames_cvqcf"]
+animations = [{
+"frames": [],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"new_animation",
+"speed": 5.0
+}]
+
+[sub_resource type="Animation" id="Animation_qnd70"]
+resource_name = "kulkas"
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_5lg20"]
+_data = {
+&"kulkas": SubResource("Animation_qnd70")
+}
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2i03x"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_qnd70"]
+animations = [{
+"frames": [],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"new_animation",
+"speed": 5.0
+}]
 
 [node name="HeatBall" type="Area2D" unique_id=219715990]
 collision_mask = 3
 script = ExtResource("1_qnd70")
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=804965890]
+[node name="Sprite2D" type="AnimatedSprite2D" parent="." unique_id=1525554931]
 position = Vector2(2, 0)
 scale = Vector2(0.1796875, 0.15234375)
-texture = ExtResource("1_f2ivb")
+sprite_frames = SubResource("SpriteFrames_cvqcf")
+animation = &"new_animation"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite2D" unique_id=1515897455]
+libraries/ = SubResource("AnimationLibrary_5lg20")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=493861817]
 position = Vector2(2, 0)
 shape = SubResource("RectangleShape2D_2i03x")
+
+[node name="Kulkaa" type="AnimatedSprite2D" parent="." unique_id=916361982]
+visibility_layer = 33
+position = Vector2(-4, -3)
+sprite_frames = SubResource("SpriteFrames_qnd70")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
