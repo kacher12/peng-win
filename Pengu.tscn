@@ -27,6 +27,7 @@ position_smoothing_enabled = true
 position_smoothing_speed = 4.0
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1127549873]
+visible = false
 position = Vector2(4.0992208, 4.6992707)
 scale = Vector2(0.98505694, 1.0332475)
 texture = ExtResource("2_7sdkj")
