@@ -16,6 +16,8 @@ scale = Vector2(0.7, 0.7)
 collision_layer = 3
 collision_mask = 3
 script = ExtResource("1_ryw4k")
+dash_speed = 900
+dash_steering = 20.0
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1841463969]
 scale = Vector2(1.4285713, 1.4285713)

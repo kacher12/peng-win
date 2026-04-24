@@ -1,29 +1,10 @@
 [gd_scene format=3 uid="uid://dtgvcmnqa86bk"]
 
 [ext_resource type="Script" uid="uid://d3rf83gisdabi" path="res://pickups/HeatBall.gd" id="1_qnd70"]
+[ext_resource type="Texture2D" uid="uid://76fyhx5j4swo" path="res://pickups/HeatBall.png" id="2_qnd70"]
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_cvqcf"]
-animations = [{
-"frames": [],
-"loop": true,
-"name": &"default",
-"speed": 5.0
-}, {
-"frames": [],
-"loop": true,
-"name": &"new_animation",
-"speed": 5.0
-}]
-
-[sub_resource type="Animation" id="Animation_qnd70"]
-resource_name = "kulkas"
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_5lg20"]
-_data = {
-&"kulkas": SubResource("Animation_qnd70")
-}
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_2i03x"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_qnd70"]
+radius = 25.96151
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_qnd70"]
 animations = [{
@@ -42,18 +23,15 @@ animations = [{
 collision_mask = 3
 script = ExtResource("1_qnd70")
 
-[node name="Sprite2D" type="AnimatedSprite2D" parent="." unique_id=1525554931]
-position = Vector2(2, 0)
-scale = Vector2(0.1796875, 0.15234375)
-sprite_frames = SubResource("SpriteFrames_cvqcf")
-animation = &"new_animation"
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite2D" unique_id=1515897455]
-libraries/ = SubResource("AnimationLibrary_5lg20")
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=210534366]
+position = Vector2(-1.2910175, -1.3601751)
+scale = Vector2(0.050931983, 0.049158745)
+texture = ExtResource("2_qnd70")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=493861817]
-position = Vector2(2, 0)
-shape = SubResource("RectangleShape2D_2i03x")
+position = Vector2(-0.58203316, -0.83558273)
+scale = Vector2(0.6800002, 0.6800002)
+shape = SubResource("CircleShape2D_qnd70")
 
 [node name="Kulkaa" type="AnimatedSprite2D" parent="." unique_id=916361982]
 visibility_layer = 33
