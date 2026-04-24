@@ -18,6 +18,8 @@ collision_mask = 3
 script = ExtResource("1_ryw4k")
 dash_speed = 900
 dash_steering = 20.0
+min_dash_duration = 0.08
+trail_color = Color(0, 2.72096, 5.023054, 0.6)
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1841463969]
 scale = Vector2(1.4285713, 1.4285713)
@@ -25,6 +27,8 @@ position_smoothing_enabled = true
 position_smoothing_speed = 4.0
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1127549873]
+position = Vector2(4.0992208, 4.6992707)
+scale = Vector2(0.98505694, 1.0332475)
 texture = ExtResource("2_7sdkj")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1754494248]
