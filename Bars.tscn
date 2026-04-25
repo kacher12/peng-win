@@ -4,6 +4,11 @@
 [ext_resource type="Texture2D" uid="uid://y4pkihd4h6nj" path="res://UI/FullHeat.png" id="2_7l57w"]
 [ext_resource type="Script" uid="uid://bbsh160xotijw" path="res://TempBar.gd" id="2_mbwtm"]
 
+[sub_resource type="Gradient" id="Gradient_mbwtm"]
+interpolation_mode = 2
+offsets = PackedFloat32Array(0, 0.5629371, 0.94755244)
+colors = PackedColorArray(0.3005334, 0.42700332, 0.91813564, 1, 1, 1, 1, 1, 0.9790997, 0.51454693, 0.44483158, 1)
+
 [node name="CanvasLayer" type="CanvasLayer" unique_id=158583930]
 
 [node name="VSlider" type="VSlider" parent="." unique_id=889477637]
@@ -17,7 +22,7 @@ offset_left = 827.0
 offset_top = 48.999985
 offset_right = 1647.0
 offset_bottom = 869.0
-scale = Vector2(0.44000003, 0.44000003)
+scale = Vector2(0.3600008, 0.3600008)
 max_value = 1300.0
 value = 1300.0
 allow_greater = true
@@ -25,3 +30,4 @@ fill_mode = 3
 texture_under = ExtResource("1_mbwtm")
 texture_progress = ExtResource("2_7l57w")
 script = ExtResource("2_mbwtm")
+temp_gradient = SubResource("Gradient_mbwtm")

@@ -9,7 +9,7 @@ func _on_body_entered(body: Node) -> void:
 		
 
 		# Wywoływanie autoload'a HeatSignals z folderu Autoloads
-		HeatSignals.on_heat_added.emit(100)
+		HeatSignals.on_heat_added.emit(150)
 		
 		FX.pengu_squash_and_stretch(body)
 		# skonczylo sie
