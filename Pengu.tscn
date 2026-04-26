@@ -19,13 +19,14 @@ collision_mask = 3
 motion_mode = 1
 platform_on_leave = 1
 script = ExtResource("1_ryw4k")
-normal_steering = 110.0
-max_ice_speed = 1400.0
-ice_acceleration = 800.0
+max_ice_speed = 1000.0
+momentum_decay = 350.0
 dash_speed = 900.0
 dash_steering = 20.0
-min_dash_duration = 0.08
-trail_color = Color(0, 2.72096, 5.023054, 0.6)
+normal_trail_color = Color(4.088911, 4.088911, 4.088911, 0.3019608)
+light_ice_trail_color = Color(0.2914373, 0.4048565, 0.9507062, 0.5019608)
+ice_trail_color = Color(0, 0.27751315, 0.5167891, 0.6)
+dash_trail_color = Color(1.1532146, 1.1726216, 1.2453984, 0.7254902)
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1841463969]
 scale = Vector2(1.4285713, 1.4285713)
@@ -33,9 +34,9 @@ position_smoothing_enabled = true
 position_smoothing_speed = 4.0
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1127549873]
-visible = false
-position = Vector2(4.0992208, 4.6992707)
-scale = Vector2(0.98505694, 1.0332475)
+modulate = Color(1, 1, 1, 0.039215688)
+position = Vector2(-6.1035156e-05, 6.6399994)
+scale = Vector2(0.7, 0.8783928)
 texture = ExtResource("2_7sdkj")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1754494248]
