@@ -3,22 +3,23 @@ extends CharacterBody2D
 # --- PODSTAWOWY RUCH ---
 @export var speed = 400.0
 @export var normal_steering = 60.0 
-@export var hard_speed_cap = 1800.0    # NOWE: Maksymalna możliwa prędkość w grze
+@export var hard_speed_cap = 1800.0    
 
 # --- LÓD (ICE) ---
-@export var max_ice_speed = 900.0      
-@export var ice_acceleration = 450.0   
-@export var momentum_decay = 700.0     # Bazowa wartość hamowania
+@export var max_ice_speed = 1500.0      
+@export var ice_acceleration = 1000.0   
+@export var momentum_decay = 300.0     
 
 # --- DASH ---
-@export var dash_speed = 1200.0
-@export var dash_steering = 5.0 
+@export var dash_speed = 900.0
+@export var dash_steering = 20.0 
 @export var min_dash_duration = 0.2
 @export var max_dash_duration = 0.35
 
 # --- MECHANIKI ODBIĆ (BOUNCING) ---
-@export var ice_edge_bounce_multiplier: float = 0.6 
-@export var wall_bounce_multiplier: float = 0.85    
+@export var ice_edge_bounce_multiplier: float = 0.3 
+@export var wall_bounce_multiplier: float = 1.2    
+@export var hitstop_duration: float = 0.05           
 @export var bounce_duration: float = 0.35           
 @export var bounce_steering: float = 1.5            
 
@@ -30,13 +31,6 @@ extends CharacterBody2D
 @export var ghost_spawn_rate: float = 0.05                        
 @export var ghost_life_time: float = 0.35                         
 
-# --- EFEKT SZLAKU (DASH 3D) ---
-@export var sub_viewport_container: SubViewportContainer
-@export var sub_viewport: SubViewport
-@export var dash_trail_opacity: float = 0.5
-@export var dash_ghost_rate: float = 0.03
-@export var dash_ghost_lifetime: float = 0.4
-
 # --- MAPA ---
 @export var tile_map_layer: TileMapLayer
 
@@ -46,6 +40,12 @@ var ghost_timer = 0.0
 var bounce_timer = 0.0 
 var is_on_ice = false 
 var was_on_ice = false 
+
+# --- ZMIENNE HITSTOPU ---
+var hitstop_timer = 0.0
+var pending_bounce_normal = Vector2.ZERO
+var pending_bounce_speed = 0.0
+var pending_pre_velocity = Vector2.ZERO
 
 @onready var base_speed = speed 
 @onready var base_normal_steering = normal_steering 
@@ -57,7 +57,8 @@ func get_input(delta, terrain_speed):
 	
 	if is_dashing:
 		if input_direction != Vector2.ZERO:
-			var target_velocity = input_direction * dash_speed
+			# ZMIANA: Używamy teraz dynamicznego 'speed', które zsumowaliśmy w start_dash()
+			var target_velocity = input_direction * speed
 			velocity = velocity.lerp(target_velocity, dash_steering * delta)
 		return 
 		
@@ -80,10 +81,7 @@ func get_input(delta, terrain_speed):
 		var target_velocity = input_direction * speed
 		velocity = velocity.lerp(target_velocity, normal_steering * delta)
 	else:
-		# --- NOWA LOGIKA DYNAMICZNEGO MOMENTUM ---
 		if speed > terrain_speed:
-			# Obliczamy jak bardzo prędkość przekracza bazową
-			# Jeśli lecisz 1800, a baza to 400, mnożnik hamowania wyniesie 4.5x
 			var decay_multiplier = speed / terrain_speed
 			speed = move_toward(speed, terrain_speed, momentum_decay * decay_multiplier * delta)
 		else:
@@ -99,10 +97,15 @@ func get_input(delta, terrain_speed):
 			
 		velocity = velocity.lerp(target_velocity, current_steering * delta)
 	
-	# Globalne ograniczenie prędkości
 	speed = clamp(speed, 0.0, hard_speed_cap)
 
 func _physics_process(delta):
+	if hitstop_timer > 0:
+		hitstop_timer -= delta
+		if hitstop_timer <= 0:
+			execute_wall_bounce()
+		return 
+
 	was_on_ice = is_on_ice
 	if bounce_timer > 0:
 		bounce_timer -= delta
@@ -116,8 +119,9 @@ func _physics_process(delta):
 	if is_dashing:
 		dash_timer += delta 
 		ghost_timer += delta 
-		if ghost_timer >= dash_ghost_rate:
-			spawn_3d_dash_ghost()
+		if ghost_timer >= ghost_spawn_rate:
+			# ZMIANA: Zastąpiono niedziałające 3D powrotem do czystego 2D dla dasha
+			spawn_trail_ghost(true) 
 			ghost_timer = 0.0 
 		if dash_timer >= max_dash_duration:
 			stop_dash()
@@ -146,19 +150,31 @@ func _physics_process(delta):
 			if tile_data:
 				var effect = tile_data.get_custom_data("tile_effect")
 				if effect == "wall":
-					if is_dashing: stop_dash()
-					if pre_velocity.length() > 50 and bounce_timer <= 0:
-						var bounce_dir = pre_velocity.bounce(normal).normalized()
-						var input_dir = Input.get_vector("left", "right", "up", "down")
-						if input_dir != Vector2.ZERO:
-							var custom_bounce = (bounce_dir + input_dir * 1.5).normalized()
-							if custom_bounce.dot(normal) > 0.1:
-								bounce_dir = custom_bounce
-						
-						speed = clamp(pre_velocity.length() * wall_bounce_multiplier, base_speed, hard_speed_cap)
-						velocity = bounce_dir * speed
-						bounce_timer = bounce_duration
+					if pre_velocity.dot(normal) < -10.0 and bounce_timer <= 0:
+						if is_dashing: stop_dash()
+						if pre_velocity.length() > 50:
+							hitstop_timer = hitstop_duration
+							pending_bounce_normal = normal
+							pending_pre_velocity = pre_velocity
+							pending_bounce_speed = clamp(pre_velocity.length() * wall_bounce_multiplier, base_speed, hard_speed_cap)
+							velocity = Vector2.ZERO
+							speed = 0.0
 					break
+
+func execute_wall_bounce():
+	var bounce_dir = pending_pre_velocity.bounce(pending_bounce_normal).normalized()
+	var input_dir = Input.get_vector("left", "right", "up", "down")
+	
+	if input_dir != Vector2.ZERO:
+		var custom_bounce = (bounce_dir + input_dir * 2.0).normalized()
+		if custom_bounce.dot(pending_bounce_normal) > 0.1:
+			bounce_dir = custom_bounce
+		else:
+			bounce_dir = pending_bounce_normal
+
+	speed = pending_bounce_speed
+	velocity = bounce_dir * speed
+	bounce_timer = bounce_duration
 
 func start_dash():
 	var dash_direction = Input.get_vector("left", "right", "up", "down")
@@ -166,13 +182,17 @@ func start_dash():
 	is_dashing = true
 	dash_timer = 0.0 
 	ghost_timer = 0.0
-	velocity = dash_direction * dash_speed
+	
+	# ZMIANA: Sumujemy obecną prędkość i siłę dasha (z limitem maksymalnym)
+	speed = clamp(speed + dash_speed, 0.0, hard_speed_cap)
+	velocity = dash_direction * speed
+	
 	get_tree().call_group("trail_ghosts", "queue_free")
 
 func stop_dash():
 	is_dashing = false
-	if is_on_ice:
-		speed = velocity.length() * 0.9 
+	# ZMIANA: Zawsze przekazujemy resztkowy pęd po dashu, niezależnie od tego czy to lód
+	speed = velocity.length() 
 
 func check_current_tile() -> float:
 	var terrain_speed = base_speed
@@ -211,15 +231,18 @@ func spawn_trail_ghost(is_dash_ghost: bool = false):
 	ghost.offset = sprite.offset       
 	ghost.centered = sprite.centered   
 	ghost.z_index = z_index - 1 
+	
 	var current_color = normal_trail_color
+	
 	if is_dash_ghost:
 		current_color = dash_trail_color
 	else:
-		if is_on_ice:
+		# ZMIANA: Jeśli jesteśmy po odbiciu (bounce_timer > 0), rysujemy niebieski szlak
+		if is_on_ice or bounce_timer > 0:
 			current_color = ice_trail_color
 		elif speed > base_speed:
 			var extra_speed = speed - base_speed
-			var max_extra = hard_speed_cap - base_speed # Skalowanie szlaku do nowego limitu
+			var max_extra = hard_speed_cap - base_speed
 			var ratio = clamp(extra_speed / max_extra, 0.0, 1.0) 
 			if ratio > 0.5:
 				var sub_ratio = (ratio - 0.5) * 2.0
@@ -227,27 +250,8 @@ func spawn_trail_ghost(is_dash_ghost: bool = false):
 			else:
 				var sub_ratio = ratio * 2.0
 				current_color = normal_trail_color.lerp(light_ice_trail_color, sub_ratio)
+				
 	ghost.modulate = current_color
 	var tween = ghost.create_tween()
 	tween.tween_property(ghost, "modulate:a", 0.0, ghost_life_time).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
-	tween.tween_callback(ghost.queue_free)
-
-func spawn_3d_dash_ghost():
-	if not sub_viewport_container or not sub_viewport: return
-	var texture = sub_viewport.get_texture()
-	var image = texture.get_image()
-	if image.is_empty(): return 
-	image.flip_y()
-	var static_texture = ImageTexture.create_from_image(image)
-	var ghost = TextureRect.new()
-	ghost.texture = static_texture
-	ghost.global_position = sub_viewport_container.global_position
-	ghost.scale = sub_viewport_container.scale
-	ghost.size = sub_viewport_container.size
-	ghost.modulate.a = dash_trail_opacity
-	ghost.z_index = z_index - 1
-	ghost.add_to_group("trail_ghosts")
-	get_tree().current_scene.add_child(ghost)
-	var tween = ghost.create_tween()
-	tween.tween_property(ghost, "modulate:a", 0.0, dash_ghost_lifetime).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 	tween.tween_callback(ghost.queue_free)
