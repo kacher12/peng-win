@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://d6gw64vc5oyb"]
 
 [ext_resource type="Script" uid="uid://ctsv73jwve5io" path="res://pickups/pickup_magnet.gd" id="1_x1gt2"]
-[ext_resource type="PackedScene" uid="uid://d6gw64vc5oyb" path="res://pickups/Pickup_Base.tscn" id="2_0lcj2"]
+[ext_resource type="PackedScene" uid="uid://mqmuucprm4vm" path="res://pickups/Pickup_Magnet.tscn" id="2_0lcj2"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_85hlh"]
 
